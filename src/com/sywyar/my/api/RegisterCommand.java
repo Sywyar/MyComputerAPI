@@ -10,14 +10,12 @@ package com.sywyar.my.api;
 
 import com.sywyar.my.GlobalVariable;
 
-import java.util.HashMap;
-
 public class RegisterCommand extends GlobalVariable {
-    private RegisterCommand(){};
+    private RegisterCommand(){}
 
     public static void addCommand(Command command) throws CommandTypeException {
         if (!commands.containsKey(command.getMyComputerPluginID()+":"+command.getCommandType())){
-            if (command.getMyComputerPluginID()!=null && !command.getMyComputerPluginID().equals("")){
+            if (command.getMyComputerPluginID()!=null && !command.getMyComputerPluginID().isEmpty()){
                 if (!command.getCommandType().contains(":") && !command.getCommandType().contains("(") && !command.getCommandType().contains(")") && !command.getMyComputerPluginID().contains(":") && !command.getMyComputerPluginID().contains("(") && !command.getMyComputerPluginID().contains(")")){
                     commandPluginName.put(command,command.getMyComputerPluginID());
                     commands.put(command.getMyComputerPluginID()+":"+command.getCommandType(),command);
@@ -30,10 +28,5 @@ public class RegisterCommand extends GlobalVariable {
         }else {
             throw new CommandTypeException(command.getClass().getCanonicalName()+"命令添加失败!原因:与现有的类型重复.现有类型来源:"+commandPluginName.get(commands.get(command.getMyComputerPluginID()+":"+command.getCommandType())));
         }
-    }
-
-    public static void removeAll(){
-        commandPluginName = new HashMap<>();
-        commands = new HashMap<>();
     }
 }
